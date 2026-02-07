@@ -1,6 +1,6 @@
 'use client';
 import React from 'react';
-import { Plus, Users, Building2, Folder, HomeIcon, Home, Settings } from 'lucide-react';
+import { Users, Building2, Folder, Home, Settings } from 'lucide-react';
 import { ThemeSwitcher } from '../theme-switcher';
 import { LogoutButton } from '../logout-button';
 import { useSidebar } from '@/components/ui/sidebar';
@@ -9,7 +9,6 @@ import {
   SidebarContent,
   SidebarMenuItem,
   SidebarMenuButton,
-  SidebarGroupAction,
   SidebarFooter,
   SidebarGroup,
   SidebarGroupContent,
@@ -25,7 +24,7 @@ const salesLinks = [
 const AppSidebar = () => {
   const { open } = useSidebar();
   return (
-    <Sidebar className={`relative max-w-none ${!open && 'w-12'}`} collapsible="icon">
+    <Sidebar className={`relative max-w-none ${!open && 'w-12'} `} collapsible="icon" side="left">
       <SidebarHeader>[logo]</SidebarHeader>
       <SidebarContent>
         <SidebarGroup>

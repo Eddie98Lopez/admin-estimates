@@ -10,7 +10,7 @@ const ProjectCard = ({ project }: { project: ProjectType }) => {
         <div className="aspect-video p-0'">
           <Image
             src={project.cover_image}
-            width={300}
+            width={720}
             height={100}
             alt={project.title}
             className="object-cover w-full aspect-video"
