@@ -9,7 +9,7 @@ type SidebarLink = {
 
 const dashboardUrl = '/protected';
 
-const navLinks: SidebarLink[] = [
+export const navLinks: SidebarLink[] = [
   {
     title: 'projects',
     url: `${dashboardUrl}/projects`,
