@@ -18,6 +18,7 @@ export type Discount = {
 export type Estimate = {
   line_items: LineItem[]; // keep it as [] instead of null to simplify
   customer_id?: string;
+  adjustedTotal?: number;
 
   discount?: Discount;
 
@@ -54,6 +55,7 @@ type Action =
   | { type: 'SET_VALUE_MULTIPLIER'; payload: Estimate['value_multiplier'] }
   | { type: 'SET_DISCOUNT'; payload?: Discount }
   | { type: 'CLEAR_DISCOUNT' }
+  | { type: 'SET_ADJUSTED_TOTAL'; payload: number }
   | { type: 'SET_PAY_SCHEDULE'; payload: number[] }
   | { type: 'ADD_LINE_ITEM'; payload: { product: Product; quantity?: number } }
   | { type: 'UPSERT_LINE_ITEM'; payload: { product: Product; quantity: number } }
@@ -110,6 +112,9 @@ function reducer(state: EstimatesState, action: Action): EstimatesState {
 
     case 'CLEAR_DISCOUNT':
       return { estimate: { ...e, discount: undefined } };
+
+    case 'SET_ADJUSTED_TOTAL':
+      return { estimate: { ...e, adjustedTotal: action.payload } };
 
     case 'SET_PAY_SCHEDULE':
       return { estimate: { ...e, pay_schedule: normalizeSchedule(action.payload) } };
@@ -203,6 +208,7 @@ type EstimatesContextValue = {
   clearDiscount: () => void;
 
   setPaySchedule: (schedule: number[]) => void;
+  setAdjustedTotal: (total: number) => void;
 
   addLineItem: (product: Product, quantity?: number) => void;
   upsertLineItem: (product: Product, quantity: number) => void;
@@ -231,6 +237,7 @@ export function EstimatesProvider({ children }: { children: ReactNode }) {
 
       setCustomerId: (id) => dispatch({ type: 'SET_CUSTOMER_ID', payload: id }),
       setValueMultiplier: (m) => dispatch({ type: 'SET_VALUE_MULTIPLIER', payload: m }),
+      setAdjustedTotal: (total) => dispatch({ type: 'SET_ADJUSTED_TOTAL', payload: total }),
 
       setDiscount: (d) => dispatch({ type: 'SET_DISCOUNT', payload: d }),
       clearDiscount: () => dispatch({ type: 'CLEAR_DISCOUNT' }),
