@@ -1,25 +1,17 @@
 import React from 'react';
 import { Item } from '@/components/ui/item';
 import { Button } from '@/components/ui/button';
-import { Bookmark, Coins, Tags, CalendarClock, User, BarChart4 } from 'lucide-react';
+import { Bookmark, Tags, CalendarClock, User, BarChart4 } from 'lucide-react';
 import { useEstimates } from '@/lib/estimates-provider';
-import { FinalPriceAction } from './panel-actions';
+import { FinalPriceAction } from './panel-actions/final-total-action';
+import { calculateAdjustedRange, calculateSubtotalRange } from '@/lib/subtotalRange';
 
-const formatterUS = new Intl.NumberFormat('en-US', {
+export const formatterUS = new Intl.NumberFormat('en-US', {
   style: 'currency',
   currency: 'USD',
+  minimumFractionDigits: 0,
+  maximumFractionDigits: 0,
 });
-
-function calculateSubtotalRange(array) {
-  let min = 0;
-  let max = 0;
-  for (let i = 0; i < array.length; i++) {
-    min = array[i].product.min * array[i].quantity + min;
-    max = array[i].product.max * array[i].quantity + max;
-  }
-
-  return { max, min };
-}
 
 const EstimateActionButtons = () => {
   return (
@@ -47,19 +39,14 @@ const EstimateActionButtons = () => {
 
 const EstimatePanel = () => {
   const { state, addLineItem, setLineItemQty } = useEstimates();
-  const { discount, value_multiplier } = state.estimate;
-  const { line_items } = state.estimate;
-  console.log(useEstimates());
-  const subtotalRange = calculateSubtotalRange(line_items);
+  const { discount, value_multiplier, line_items, adjustedTotal } = state.estimate;
 
-  const valueMultRange = {
-    min: Math.round(subtotalRange.min * state.estimate.value_multiplier * 100) / 100,
-    max: Math.round(subtotalRange.max * value_multiplier * 100) / 100,
-  };
+  const subtotalRange = calculateSubtotalRange(line_items);
+  const adjustedRange = calculateAdjustedRange(line_items, discount, value_multiplier);
 
   return (
-    <Item variant="outline" className=" max-h-[85vh] grid grid-rows-[1fr_auto] items-start gap-2 bg-background p-6">
-      <div className="">
+    <Item variant="outline" className=" min-h-[85vh] grid grid-rows-[1fr_auto] items-start gap-2 bg-background p-6">
+      <div className="h-full">
         <h2 className="text-2xl font-bold">Current Quote</h2>
         <ul className="overflow-y-scroll h-full max-h-[400px]">
           {line_items.map((line_item, i) => (
@@ -92,7 +79,7 @@ const EstimatePanel = () => {
       <div className="w-full h-full">
         <div className="border-border border-t mb-4 py-3 flex flex-col gap-1 ">
           <div className="flex justify-between text-muted-foreground text-xs">
-            <p>Subtotal</p>{' '}
+            <p>Subtotal</p>
             <p>
               ${subtotalRange.min} - ${subtotalRange.max}
             </p>
@@ -115,13 +102,20 @@ const EstimatePanel = () => {
           <div className="flex justify-between muted-foreground text-xs font-bold">
             <p>Adjusted Range</p>{' '}
             <p>
-              ${valueMultRange.min} - ${valueMultRange.max}
+              ${adjustedRange.min} - ${adjustedRange.max}
             </p>
           </div>
           <div className="flex justify-between font-bold">
             <p>Suggested Total</p>
-            <p>{formatterUS.format((valueMultRange.max + valueMultRange.min) / 2)}</p>
+            <p>{formatterUS.format((adjustedRange.max + adjustedRange.min) / 2)}</p>
           </div>
+
+          {adjustedTotal && (
+            <div className="flex justify-between font-bold my-2 text-xl font-bold">
+              <p>Adjusted Total</p>
+              <p>{formatterUS.format(adjustedTotal)}</p>
+            </div>
+          )}
         </div>
         <EstimateActionButtons />
       </div>
