@@ -3,6 +3,7 @@ import { Item } from '@/components/ui/item';
 import { Button } from '@/components/ui/button';
 import { Bookmark, Tags, CalendarClock, User, BarChart4 } from 'lucide-react';
 import { useEstimates } from '@/lib/estimates-provider';
+import DiscountAction from './panel-actions/discount-action';
 import { FinalPriceAction } from './panel-actions/final-total-action';
 import { calculateAdjustedRange, calculateSubtotalRange } from '@/lib/subtotalRange';
 
@@ -24,9 +25,7 @@ const EstimateActionButtons = () => {
       <Button variant="outline" className="min-h-[50px]">
         <CalendarClock /> <span>Add Pay Schedule</span>
       </Button>
-      <Button variant="outline" className="min-h-[50px]">
-        <Tags /> <span>Apply Discount</span>
-      </Button>
+      <DiscountAction />
       <Button variant="outline" className="min-h-[50px]">
         <BarChart4 /> <span>Value Mulitplier</span>
       </Button>
