@@ -39,7 +39,7 @@ export function FinalPriceAction() {
   }, [min, max, median]);
 
   return (
-    <Dialog>
+    <Dialog onOpenChange={() => setDisplayInput(false)}>
       <DialogTrigger asChild>
         <Button variant="outline" className="min-h-[50px]">
           <Coins /> <span>Adjust Final Total</span>
