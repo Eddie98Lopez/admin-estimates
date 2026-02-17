@@ -2,7 +2,7 @@
 import { Item } from '@/components/ui/item';
 import EstimatesLayout from './layout';
 import { Heart, ShoppingBag, Package, ToyBrick } from 'lucide-react';
-import EstimatePanel from './estimate-panel';
+import EstimatePanel from '../../../components/estimate-panel';
 import { Button } from '@/components/ui/button';
 import { dummyProducts } from '@/lib/dummyData';
 import { ProductCard } from '@/components/ui/productListItem';

@@ -1,15 +1,7 @@
 import { Button } from '@/components/ui/button';
 import { useEstimates } from '@/lib/estimates-provider';
 import type { Discount } from '@/lib/estimates-provider';
-import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from '@/components/ui/dialog';
+import { Dialog, DialogClose, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Tags } from 'lucide-react';
 
 import React from 'react';
@@ -40,7 +32,7 @@ const DiscountAction = () => {
             <Button
               key={`discount-${i}`}
               variant={'outline'}
-              className={`text-xl col-span-2 min-h-[50px] ${current?.type === d.type && current?.value === d.value && 'border-green-400 bg-lime-50'}`}
+              className={`text-xl col-span-2 min-h-[100px] w-full aspect-square  ${current?.type === d.type && current?.value === d.value && 'border-green-400 bg-lime-50'} gap-0`}
               onClick={() => setDiscount(d)}
             >
               {d.value}

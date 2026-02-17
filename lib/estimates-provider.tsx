@@ -15,6 +15,8 @@ export type Discount = {
   value: number; // flat = dollars, percent = 0-100
 };
 
+export type ValueMulitiplier = 1 | 1.1 | 1.2 | 1.4;
+
 export type Estimate = {
   line_items: LineItem[]; // keep it as [] instead of null to simplify
   customer_id?: string;
@@ -25,7 +27,7 @@ export type Estimate = {
   // Example: [50, 50] or [30, 70]
   pay_schedule: number[];
 
-  value_multiplier: 1 | 1.1 | 1.2 | 1.4;
+  value_multiplier: ValueMulitiplier;
 
   // Optional metadata fields you’ll probably add soon
   // status?: "draft" | "sent" | "viewed" | "accepted" | "expired";

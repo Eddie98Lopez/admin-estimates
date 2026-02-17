@@ -1,11 +1,11 @@
 import React from 'react';
 import { Item } from '@/components/ui/item';
 import { Button } from '@/components/ui/button';
-import { Bookmark, Tags, CalendarClock, User, BarChart4 } from 'lucide-react';
+import { Bookmark, User } from 'lucide-react';
 import { useEstimates } from '@/lib/estimates-provider';
-import DiscountAction from './panel-actions/discount-action';
-import { FinalPriceAction } from './panel-actions/final-total-action';
+import { DiscountAction, FinalPriceAction, ValueMultiplierAction, PayScheduleAction } from './panel-actions';
 import { calculateAdjustedRange, calculateSubtotalRange } from '@/lib/subtotalRange';
+import type { LineItem } from '@/lib/estimates-provider';
 
 export const formatterUS = new Intl.NumberFormat('en-US', {
   style: 'currency',
@@ -22,17 +22,35 @@ const EstimateActionButtons = () => {
         <span>Save Quote</span>
       </Button>
       <FinalPriceAction />
-      <Button variant="outline" className="min-h-[50px]">
-        <CalendarClock /> <span>Add Pay Schedule</span>
-      </Button>
+      <PayScheduleAction />
       <DiscountAction />
-      <Button variant="outline" className="min-h-[50px]">
-        <BarChart4 /> <span>Value Mulitplier</span>
-      </Button>
+      <ValueMultiplierAction />
       <Button variant="outline" className="col-span-full min-h-[50px]">
         <User /> <span>Select Customer</span>
       </Button>
     </div>
+  );
+};
+
+const LineItem = ({ item, add1Item, minus1Item }: { item: LineItem; add1Item: () => void; minus1Item: () => void }) => {
+  return (
+    <li className="grid grid-cols-[2fr_1fr] justify-between w-full items-center gap-3 py-2 border-b border-border">
+      <div className="1 min-w-0">
+        <p className="text-ellipsis font-bold truncate">{item.product.product_name}</p>
+        <p className="text-ellipsis truncate text-sm ">{item.product.shortDescription}</p>
+        <p>
+          ${item.product.min} - ${item.product.max}
+        </p>
+      </div>
+
+      <div className="flex items-center gap-2 justify-self-end">
+        <Button onClick={minus1Item} variant={'secondary'}>
+          -
+        </Button>
+        <span>{item.quantity}</span>
+        <Button onClick={add1Item}>+</Button>
+      </div>
+    </li>
   );
 };
 
@@ -49,29 +67,16 @@ const EstimatePanel = () => {
         <h2 className="text-2xl font-bold">Current Quote</h2>
         <ul className="overflow-y-scroll h-full max-h-[400px]">
           {line_items.map((line_item, i) => (
-            <li
-              key={`line-item-${i}`}
-              className="grid grid-cols-[2fr_1fr] justify-between w-full items-center gap-3 py-2 border-b border-border"
-            >
-              <div className="1 min-w-0">
-                <p className="text-ellipsis font-bold truncate">{line_item.product.product_name}</p>
-                <p className="text-ellipsis truncate text-sm ">{line_item.product.shortDescription}</p>
-                <p>
-                  ${line_item.product.min} - ${line_item.product.max}
-                </p>
-              </div>
-
-              <div className="flex items-center gap-2 justify-self-end">
-                <Button
-                  onClick={() => setLineItemQty(line_item.product._id, line_item.quantity - 1)}
-                  variant={'secondary'}
-                >
-                  -
-                </Button>
-                <span>{line_item.quantity}</span>
-                <Button onClick={() => addLineItem(line_item.product)}>+</Button>
-              </div>
-            </li>
+            <LineItem
+              key={`line_item-${i}`}
+              item={line_item}
+              add1Item={() => {
+                addLineItem(line_item.product);
+              }}
+              minus1Item={() => {
+                setLineItemQty(line_item.product._id, line_item.quantity - 1);
+              }}
+            />
           ))}
         </ul>
       </div>
@@ -84,7 +89,7 @@ const EstimatePanel = () => {
             </p>
           </div>
           <div className="flex justify-between text-muted-foreground text-xs">
-            <p>Discount</p>{' '}
+            <p>Discount</p>
             {discount == null ? (
               <p>--</p>
             ) : (
