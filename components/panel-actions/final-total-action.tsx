@@ -1,5 +1,4 @@
 import { Button } from '@/components/ui/button';
-import { Item, ItemContent } from '@/components/ui/item';
 import { Input } from '@/components/ui/input';
 import {
   Dialog,
@@ -60,7 +59,7 @@ export function FinalPriceAction() {
             <div className="flex flex-row mx-auto text-5xl font-bold flex-grow items-center gap-3 content-center">
               <span>$</span>
               <Input
-                className="text-center  !text-5xl !h-auto"
+                className={`text-center  !text-5xl !h-auto ${(price < min || price > max) && 'border border-red-500'}`}
                 value={price}
                 min={min}
                 max={max}
