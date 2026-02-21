@@ -1,9 +1,15 @@
 import React from 'react';
 import { Item } from '@/components/ui/item';
 import { Button } from '@/components/ui/button';
-import { Bookmark, User } from 'lucide-react';
+import { User } from 'lucide-react';
 import { useEstimates } from '@/lib/estimates-provider';
-import { DiscountAction, FinalPriceAction, ValueMultiplierAction, PayScheduleAction } from './panel-actions';
+import {
+  SaveEstimateAction,
+  DiscountAction,
+  FinalPriceAction,
+  ValueMultiplierAction,
+  PayScheduleAction,
+} from './panel-actions';
 import { calculateAdjustedRange, calculateSubtotalRange } from '@/lib/subtotalRange';
 import type { LineItem } from '@/lib/estimates-provider';
 
@@ -17,17 +23,15 @@ export const formatterUS = new Intl.NumberFormat('en-US', {
 const EstimateActionButtons = () => {
   return (
     <div className="grid grid-cols-[1fr_1fr] gap-3 w-full grow-2">
-      <Button className="col-span-full min-h-[50px]">
-        <Bookmark />
-        <span>Save Quote</span>
-      </Button>
-      <FinalPriceAction />
-      <PayScheduleAction />
       <DiscountAction />
       <ValueMultiplierAction />
+
+      <PayScheduleAction />
+      <FinalPriceAction />
       <Button variant="outline" className="col-span-full min-h-[50px]">
         <User /> <span>Select Customer</span>
       </Button>
+      <SaveEstimateAction />
     </div>
   );
 };

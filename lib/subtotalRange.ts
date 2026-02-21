@@ -50,3 +50,22 @@ export function calculateSubtotalRange(array: LineItem[]) {
 
   return { max, min };
 }
+
+export function calculatePayments(final_total: number, paySchedule: number[]) {
+  let payments = [];
+
+  for (let i = 0; i < paySchedule.length; i++) {
+    const payment = { amount: final_total * (paySchedule[i] / 100), type: '' };
+
+    if (i == 0) {
+      payment.type = 'deposit';
+    } else if (i == paySchedule.length - 1) {
+      payment.type = 'final_payment';
+    } else {
+      payment.type = 'regular_payment';
+    }
+    payments.push(payment);
+  }
+
+  return payments;
+}
