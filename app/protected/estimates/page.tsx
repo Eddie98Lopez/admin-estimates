@@ -1,4 +1,5 @@
 'use client';
+import { useEffect } from 'react';
 import { Item } from '@/components/ui/item';
 import EstimatesLayout from './layout';
 import { Heart, ShoppingBag, Package, ToyBrick } from 'lucide-react';
@@ -6,8 +7,14 @@ import EstimatePanel from '../../../components/estimate-panel';
 import { Button } from '@/components/ui/button';
 import { dummyProducts } from '@/lib/dummyData';
 import { ProductCard } from '@/components/ui/productListItem';
+import axios from 'axios';
 
 export default function Home() {
+  useEffect(() => {
+    const fuck = axios.get('/api/estimates').then((res) => {
+      console.log(res);
+    });
+  }, []);
   return (
     <EstimatesLayout>
       <div className="grid  grid-cols-[auto_3fr_minmax(auto,_450px)] w-full h-full min-h-[90vh] ">

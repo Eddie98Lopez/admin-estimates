@@ -1,3 +1,4 @@
+'use client';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import {
@@ -24,7 +25,7 @@ export const formatterUS = new Intl.NumberFormat('en-US', {
 export function FinalPriceAction() {
   const { setAdjustedTotal } = useEstimates();
   const { estimate } = useEstimates().state;
-  const range = calculateAdjustedRange(estimate.line_items, undefined, estimate.value_multiplier);
+  const range = calculateAdjustedRange(estimate.line_items, estimate.discount, estimate.value_multiplier);
 
   const min = range.min;
   const max = range.max;
