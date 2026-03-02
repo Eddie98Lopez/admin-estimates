@@ -14,11 +14,11 @@ export default function ProtectedLayout({ children }: { children: React.ReactNod
         <AppSidebar />
 
         <div className="overflow-auto max-h-screen bg-secondary">
-          <nav className="w-full flex justify-center border-b border-b-foreground/10 h-16 bg-blue-600">
+          {/*           <nav className="w-full flex justify-center border-b border-b-foreground/10 h-16 bg-blue-600">
             <div className="w-full max-w-5xl flex justify-between items-center p-3 px-5 text-sm bg-blue-400">
               {!hasEnvVars ? <EnvVarWarning /> : <AuthButton />}
             </div>
-          </nav>
+          </nav> */}
 
           <div className="flex items-center gap-5">
             <SidebarTrigger />

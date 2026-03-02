@@ -8,7 +8,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 const standardValueMultipliers: ValueMulitiplier[] = [1.1, 1.2, 1.4];
 
 const ValueMultiplierAction = () => {
-  const { setValueMultiplier } = useEstimates();
+  const { setValueMultiplier, state } = useEstimates();
 
   return (
     <Dialog>
@@ -26,7 +26,7 @@ const ValueMultiplierAction = () => {
             <Button
               key={`multiplier-${i}`}
               onClick={() => setValueMultiplier(multipler)}
-              className="col-span-2 h-[60px] text-xl gap-0"
+              className={`col-span-2 h-[60px] text-xl gap-0 ${multipler == state.estimate.value_multiplier && 'bg-lime-50 border border-green-600'}`}
               variant={'outline'}
             >
               {multipler}
