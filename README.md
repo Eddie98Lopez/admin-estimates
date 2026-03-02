@@ -1,110 +1,41 @@
-<<<<<<< HEAD
-<a href="https://demo-nextjs-with-supabase.vercel.app/">
-  <img alt="Next.js and Supabase Starter Kit - the fastest way to build apps with Next.js and Supabase" src="https://demo-nextjs-with-supabase.vercel.app/opengraph-image.png">
-  <h1 align="center">Next.js and Supabase Starter Kit</h1>
-</a>
+# POS-Style Estimates Calculator
 
-<p align="center">
- The fastest way to build apps with Next.js and Supabase
-</p>
+## Why I Built It
 
-<p align="center">
-  <a href="#features"><strong>Features</strong></a> ·
-  <a href="#demo"><strong>Demo</strong></a> ·
-  <a href="#deploy-to-vercel"><strong>Deploy to Vercel</strong></a> ·
-  <a href="#clone-and-run-locally"><strong>Clone and run locally</strong></a> ·
-  <a href="#feedback-and-issues"><strong>Feedback and issues</strong></a>
-  <a href="#more-supabase-examples"><strong>More Examples</strong></a>
-</p>
-<br/>
+I built this because I did not have a fast or reliable way to price my freelance services.
 
-## Features
+I had already structured my pricing in a spreadsheet. Every service had a name, descriptions, exclusions, deliverables, estimated hours, minimum and maximum charges, and even prerequisites.
 
-- Works across the entire [Next.js](https://nextjs.org) stack
-  - App Router
-  - Pages Router
-  - Middleware
-  - Client
-  - Server
-  - It just works!
-- supabase-ssr. A package to configure Supabase Auth to use cookies
-- Password-based authentication block installed via the [Supabase UI Library](https://supabase.com/ui/docs/nextjs/password-based-auth)
-- Styling with [Tailwind CSS](https://tailwindcss.com)
-- Components with [shadcn/ui](https://ui.shadcn.com/)
-- Optional deployment with [Supabase Vercel Integration and Vercel deploy](#deploy-your-own)
-  - Environment variables automatically assigned to Vercel project
+While structured and helpful I needed something that helped me calulate pricing faster. I also did not want something bloated like Salesforce. I felt their UI for this use case was kind of bloated and always had trouble navigating their products/services. Plus I didnt wanna pay for it. Lol. I wanted something faster and more intuitive.
 
-## Demo
+Coming from hospitality, I kept thinking about POS systems like Clover and Toast. You add items, you see totals instantly, you adjust quantities, and you move forward. That mental model made sense to me, so I decided to translate my pricing logic into that kind of interface.
 
-You can view a fully working demo at [demo-nextjs-with-supabase.vercel.app](https://demo-nextjs-with-supabase.vercel.app/).
+---
 
-## Deploy to Vercel
+## The Solution
 
-Vercel deployment will guide you through creating a Supabase account and project.
+The result is a POS inspired estimates calculator built around a cost, markup, and value range framework.
 
-After installation of the Supabase integration, all relevant environment variables will be assigned to the project so the deployment is fully functioning.
+Each service has a minimum and maximum price. When services are added to the side cart, the system calculates a subtotal range. Discounts and markup multipliers can be applied. The system then suggests a median within that adjusted range.
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fvercel%2Fnext.js%2Ftree%2Fcanary%2Fexamples%2Fwith-supabase&project-name=nextjs-with-supabase&repository-name=nextjs-with-supabase&demo-title=nextjs-with-supabase&demo-description=This+starter+configures+Supabase+Auth+to+use+cookies%2C+making+the+user%27s+session+available+throughout+the+entire+Next.js+app+-+Client+Components%2C+Server+Components%2C+Route+Handlers%2C+Server+Actions+and+Middleware.&demo-url=https%3A%2F%2Fdemo-nextjs-with-supabase.vercel.app%2F&external-id=https%3A%2F%2Fgithub.com%2Fvercel%2Fnext.js%2Ftree%2Fcanary%2Fexamples%2Fwith-supabase&demo-image=https%3A%2F%2Fdemo-nextjs-with-supabase.vercel.app%2Fopengraph-image.png)
+The goal is not to spit out one arbitrary number. It is to create guardrails.
 
-The above will also clone the Starter kit to your GitHub, you can clone that locally and develop locally.
+You can adjust quantities for add on services. You can remove items. You can apply standard pay schedules like 50/50 or 60/40. The calculator shows what the deposit would be.
 
-If you wish to just develop locally and not deploy to Vercel, [follow the steps below](#clone-and-run-locally).
+There is also a slider to intentionally round the final number so it is clean and presentable.
 
-## Clone and run locally
+This is version one. It does not yet model agile or hourly development pricing. It is currently optimized for structured design and scoped service work.
 
-1. You'll first need a Supabase project which can be made [via the Supabase dashboard](https://database.new)
+---
 
-2. Create a Next.js app using the Supabase Starter template npx command
+## Tech Stack
 
-   ```bash
-   npx create-next-app --example with-supabase with-supabase-app
-   ```
+Built with:
 
-   ```bash
-   yarn create next-app --example with-supabase with-supabase-app
-   ```
+- Next.js
+- React
+- Tailwind CSS
+- shadcn/ui
+- Supabase
 
-   ```bash
-   pnpm create next-app --example with-supabase with-supabase-app
-   ```
-
-3. Use `cd` to change into the app's directory
-
-   ```bash
-   cd with-supabase-app
-   ```
-
-4. Rename `.env.example` to `.env.local` and update the following:
-
-   ```
-   NEXT_PUBLIC_SUPABASE_URL=[INSERT SUPABASE PROJECT URL]
-   NEXT_PUBLIC_SUPABASE_ANON_KEY=[INSERT SUPABASE PROJECT API ANON KEY]
-   ```
-
-   Both `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY` can be found in [your Supabase project's API settings](https://supabase.com/dashboard/project/_?showConnect=true)
-
-5. You can now run the Next.js local development server:
-
-   ```bash
-   npm run dev
-   ```
-
-   The starter kit should now be running on [localhost:3000](http://localhost:3000/).
-
-6. This template comes with the default shadcn/ui style initialized. If you instead want other ui.shadcn styles, delete `components.json` and [re-install shadcn/ui](https://ui.shadcn.com/docs/installation/next)
-
-> Check out [the docs for Local Development](https://supabase.com/docs/guides/getting-started/local-development) to also run Supabase locally.
-
-## Feedback and issues
-
-Please file feedback and issues over on the [Supabase GitHub org](https://github.com/supabase/supabase/issues/new/choose).
-
-## More Supabase examples
-
-- [Next.js Subscription Payments Starter](https://github.com/vercel/nextjs-subscription-payments)
-- [Cookie-based Auth and the Next.js 13 App Router (free course)](https://youtube.com/playlist?list=PL5S4mPUpp4OtMhpnp93EFSo42iQ40XjbF)
-- [Supabase Auth and the Next.js App Router](https://github.com/supabase/supabase/tree/master/examples/auth/nextjs)
-=======
-# admin-dash-template
-A reusable, typesafe auth dashboard template using Next.js, TypeScript, and Supabase
->>>>>>> b0c025c2c95a88b7ba07cd248ba2f6c79c159ece
+It includes authentication and an admin layout, and will eventually expand into a lightweight CRM with contacts, organizations, and saved estimates.

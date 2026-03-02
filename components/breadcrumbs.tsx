@@ -15,7 +15,7 @@ const AppBreadcrumbs = () => {
   const items = pathname.split('/').slice(2, pathname.split('/').length);
   console.log(items);
   return (
-    <Breadcrumb>
+    <Breadcrumb className="my-3">
       <BreadcrumbList>
         <BreadcrumbItem>
           <BreadcrumbLink href="/protected">Dahsbaord</BreadcrumbLink>

@@ -1,6 +1,6 @@
 'use client';
 import React from 'react';
-import { Users, Building2, Folder, Home, Settings } from 'lucide-react';
+import { Users, Building2, Folder, Home, Settings, FileText } from 'lucide-react';
 import { ThemeSwitcher } from '../theme-switcher';
 import { LogoutButton } from '../logout-button';
 import { useSidebar } from '@/components/ui/sidebar';
@@ -20,6 +20,7 @@ import {
 const salesLinks = [
   { title: 'contacts', url: '/protected/sales', icon: Users },
   { title: 'organizations', url: '/protected/sales', icon: Building2 },
+  { title: 'estimates', url: '/protected/sales', icon: FileText },
 ];
 const AppSidebar = () => {
   const { open } = useSidebar();
