@@ -14,7 +14,7 @@ export default function ProtectedLayout({ children }: { children: React.ReactNod
           <SidebarTrigger />
           <AppBreadcrumbs />
         </header>
-        <main className="flex-1 px-8 py-6">{children}</main>
+        <main className="flex-1 px-20 py-6">{children}</main>
         <footer className="flex items-center justify-center border-t text-xs gap-8 py-16">
           <ThemeSwitcher />
         </footer>
