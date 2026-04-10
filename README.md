@@ -39,3 +39,8 @@ Built with:
 - Supabase
 
 It includes authentication and an admin layout, and will eventually expand into a lightweight CRM with contacts, organizations, and saved estimates.
+
+### Test Credentials
+
+username: test@example.com
+password: password
