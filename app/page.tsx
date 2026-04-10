@@ -2,9 +2,7 @@ import { EnvVarWarning } from '@/components/env-var-warning';
 import { AuthButton } from '@/components/auth-button';
 import { ThemeSwitcher } from '@/components/theme-switcher';
 import { hasEnvVars } from '@/lib/utils';
-import Link from 'next/link';
 import Image from 'next/image';
-import { Button } from '@/components/ui/button';
 import { redirect } from 'next/navigation';
 import { createClient } from '@/lib/supabase/server';
 
