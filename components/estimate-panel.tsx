@@ -1,5 +1,5 @@
 import React from 'react';
-import { Item } from '@/components/ui/item';
+import { Item, ItemHeader } from '@/components/ui/item';
 import { Button } from '@/components/ui/button';
 import { User } from 'lucide-react';
 import { useEstimates } from '@/lib/estimates-provider';
@@ -68,7 +68,7 @@ const EstimatePanel = () => {
   return (
     <Item variant="outline" className=" min-h-[85vh] grid grid-rows-[1fr_auto] items-start gap-2 bg-background p-6">
       <div className="h-full">
-        <h2 className="text-2xl font-bold">Estimate Calculator</h2>
+        <ItemHeader className="text-2xl font-bold">Estimate Calculator</ItemHeader>
         <ul className="overflow-y-scroll h-full max-h-[400px]">
           {line_items.map((line_item, i) => (
             <LineItem

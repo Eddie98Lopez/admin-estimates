@@ -1,9 +1,7 @@
-'use client';
 import React from 'react';
-import { Users, Building2, Folder, Home, Settings, FileText } from 'lucide-react';
+import { Home, Settings, FileText } from 'lucide-react';
 import { ThemeSwitcher } from '../theme-switcher';
 import { LogoutButton } from '../logout-button';
-import { useSidebar } from '@/components/ui/sidebar';
 import {
   Sidebar,
   SidebarContent,
@@ -17,15 +15,10 @@ import {
   SidebarMenu,
 } from '@/components/ui/sidebar';
 
-const salesLinks = [
-  { title: 'contacts', url: '/protected/sales', icon: Users },
-  { title: 'organizations', url: '/protected/sales', icon: Building2 },
-  { title: 'estimates', url: '/protected/sales', icon: FileText },
-];
+const salesLinks = [{ title: 'estimates', url: '/protected/sales', icon: FileText }];
 const AppSidebar = () => {
-  const { open } = useSidebar();
   return (
-    <Sidebar className={`relative max-w-none ${!open && 'w-12'} `} collapsible="icon" side="left">
+    <Sidebar side="left" collapsible="icon">
       <SidebarHeader>[logo]</SidebarHeader>
       <SidebarContent>
         <SidebarGroup>
@@ -33,21 +26,12 @@ const AppSidebar = () => {
             <SidebarMenuButton asChild>
               <a href="/protected/">
                 <Home />
-                <span className={`capitalize ${!open && 'w-0'}`}>Dashboard</span>
+                <span className={`capitalize `}>Dashboard</span>
               </a>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarGroup>
-        <SidebarGroup>
-          <SidebarMenuItem>
-            <SidebarMenuButton asChild>
-              <a href="/protected/projects">
-                <Folder />
-                <span className="capitalize">All Projects</span>
-              </a>
-            </SidebarMenuButton>
-          </SidebarMenuItem>
-        </SidebarGroup>
+
         <SidebarGroup>
           <SidebarGroupLabel>Sales</SidebarGroupLabel>
           <SidebarGroupContent>
@@ -67,26 +51,27 @@ const AppSidebar = () => {
         </SidebarGroup>
       </SidebarContent>
       <SidebarFooter>
-        <SidebarMenuItem>
-          <SidebarMenuButton asChild>
-            <a href="#">
-              <Settings />
-              <span>Settings</span>
-            </a>
-          </SidebarMenuButton>
-        </SidebarMenuItem>
-        <SidebarMenuItem>
-          <SidebarMenuButton asChild>
-            <a>
-              <ThemeSwitcher />
-              <span>Theme Switcher</span>
-            </a>
-          </SidebarMenuButton>
-        </SidebarMenuItem>
-
-        <SidebarGroup>
-          <LogoutButton />
-        </SidebarGroup>
+        <SidebarMenu>
+          {' '}
+          {/* ← add this wrapper */}
+          <SidebarMenuItem>
+            <SidebarMenuButton asChild>
+              <a href="/protected/settings">
+                <Settings />
+                <span>Settings</span>
+              </a>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+          <SidebarMenuItem>
+            <SidebarMenuButton asChild>
+              <a>
+                <ThemeSwitcher />
+                <span>Theme Switcher</span>
+              </a>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+        </SidebarMenu>
+        <LogoutButton /> {/* ← outside SidebarMenu, standalone */}
       </SidebarFooter>
     </Sidebar>
   );
