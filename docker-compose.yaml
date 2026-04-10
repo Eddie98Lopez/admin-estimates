@@ -1,0 +1,11 @@
+services:
+  frontend:
+    container_name: admin-dash
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - '3000:3000'
+    volumes:
+      - .:/adim-dash-template
+      - /adim-dash-template/node_modules

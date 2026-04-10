@@ -11,11 +11,6 @@ const dashboardUrl = '/protected';
 
 export const navLinks: SidebarLink[] = [
   {
-    title: 'projects',
-    url: `${dashboardUrl}/projects`,
-    icon: Folder,
-  },
-  {
     title: 'sales + marketing',
     url: `${dashboardUrl}/sales`,
     subLinks: [
