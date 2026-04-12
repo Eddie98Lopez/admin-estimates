@@ -69,3 +69,7 @@ export function calculatePayments(final_total: number, paySchedule: number[]) {
 
   return payments;
 }
+
+export function calculateMedian(a, b) {
+  return (a + b) / 2;
+}

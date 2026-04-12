@@ -10,11 +10,11 @@ import { ProductCard } from '@/components/ui/productListItem';
 import axios from 'axios';
 
 export default function Home() {
-  useEffect(() => {
-    const estimates = axios.get('/api/estimates').then((res) => {
-      console.log(res);
-    });
-  }, []);
+  // useEffect(() => {
+  //   const estimates = axios.get('/api/estimates').then((res) => {
+  //     console.log(res);
+  //   });
+  // }, []);
   return (
     <EstimatesLayout>
       <div className="grid  grid-cols-[auto_3fr_minmax(auto,_450px)] w-full h-full min-h-[90vh] ">

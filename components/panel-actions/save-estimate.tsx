@@ -5,7 +5,7 @@ import { Button } from '../ui/button';
 import { useEstimates } from '@/lib/estimates-provider';
 import { formatterUS } from './final-total-action';
 import { Item, ItemContent } from '../ui/item';
-import { calculatePayments } from '@/lib/subtotalRange';
+import { calculatePayments, calculateAdjustedRange, calculateMedian } from '@/lib/subtotalRange';
 import { getDateIn30Days } from '@/lib/getDateIn30Days';
 import type { LineItem } from '@/lib/estimates-provider';
 
@@ -19,7 +19,9 @@ const calculateEstHrSum = (array: LineItem[]) => {
 
 const SaveEstimateAction = () => {
   const { estimate } = useEstimates().state;
-  const payments = calculatePayments(estimate.adjustedTotal, estimate.pay_schedule);
+  const adjustedRange = calculateAdjustedRange(estimate.line_items, estimate.discount, estimate.value_multiplier);
+  const median = calculateMedian(adjustedRange.min, adjustedRange.max);
+  const payments = calculatePayments(estimate.adjustedTotal ?? median, estimate.pay_schedule);
   const expires = getDateIn30Days();
   const hours = calculateEstHrSum(estimate.line_items);
   return (
@@ -36,7 +38,7 @@ const SaveEstimateAction = () => {
         </DialogHeader>
         <div className="flex flex-col gap-6">
           <div className="flex gap-6 items-center">
-            <h3 className="text-4xl font-bold">{formatterUS.format(estimate.adjustedTotal)}</h3>
+            <h3 className="text-4xl font-bold">{formatterUS.format(estimate.adjustedTotal ?? median)}</h3>
             <div>
               <p className="text-xs">Expires: {expires.toLocaleDateString()}</p>
               <p className="text-xs">Approximate Hours: {hours}</p>
