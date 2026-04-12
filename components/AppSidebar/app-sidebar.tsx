@@ -1,7 +1,9 @@
+'use client';
 import React from 'react';
 import { Home, Settings, FileText } from 'lucide-react';
 import { ThemeSwitcher } from '../theme-switcher';
 import { LogoutButton } from '../logout-button';
+import Link from 'next/link';
 import {
   Sidebar,
   SidebarContent,
@@ -22,14 +24,16 @@ const AppSidebar = () => {
       <SidebarHeader>[logo]</SidebarHeader>
       <SidebarContent>
         <SidebarGroup>
-          <SidebarMenuItem>
-            <SidebarMenuButton asChild>
-              <a href="/protected/">
-                <Home />
-                <span className={`capitalize `}>Dashboard</span>
-              </a>
-            </SidebarMenuButton>
-          </SidebarMenuItem>
+          <SidebarMenu>
+            <SidebarMenuItem>
+              <SidebarMenuButton asChild>
+                <Link href="/protected/">
+                  <Home />
+                  <span className={`capitalize `}>Dashboard</span>
+                </Link>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+          </SidebarMenu>
         </SidebarGroup>
 
         <SidebarGroup>
@@ -39,10 +43,10 @@ const AppSidebar = () => {
               {salesLinks.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild>
-                    <a href={item.url + `/${item.title}`}>
+                    <Link href={item.url + `/${item.title}`}>
                       <item.icon />
                       <span className="capitalize">{item.title}</span>
-                    </a>
+                    </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               ))}
@@ -52,26 +56,17 @@ const AppSidebar = () => {
       </SidebarContent>
       <SidebarFooter>
         <SidebarMenu>
-          {' '}
-          {/* ← add this wrapper */}
           <SidebarMenuItem>
             <SidebarMenuButton asChild>
-              <a href="/protected/settings">
+              <Link href="/protected/settings">
                 <Settings />
                 <span>Settings</span>
-              </a>
-            </SidebarMenuButton>
-          </SidebarMenuItem>
-          <SidebarMenuItem>
-            <SidebarMenuButton asChild>
-              <a>
-                <ThemeSwitcher />
-                <span>Theme Switcher</span>
-              </a>
+              </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
-        <LogoutButton /> {/* ← outside SidebarMenu, standalone */}
+        <ThemeSwitcher />
+        <LogoutButton />
       </SidebarFooter>
     </Sidebar>
   );
