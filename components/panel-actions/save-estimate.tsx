@@ -27,7 +27,7 @@ const SaveEstimateAction = () => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button className="col-span-full min-h-[50px]">
+        <Button className="col-span-full min-h-[50px]" disabled={estimate.line_items.length <= 0}>
           <Bookmark />
           <span>Save Estimate</span>
         </Button>
