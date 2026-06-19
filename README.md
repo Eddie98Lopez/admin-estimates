@@ -38,7 +38,7 @@ Built with:
 - shadcn/ui
 - Supabase
 
-It includes authentication and an admin layout, and will eventually expand into a lightweight CRM with contacts, organizations, and saved estimates.
+It includes authentication and an admin layout, and will eventually expand into a lightweight CRM with contacts, Customers, and saved estimates.
 
 ### Test Credentials
 

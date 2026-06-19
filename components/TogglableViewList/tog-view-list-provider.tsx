@@ -1,32 +1,18 @@
 'use client';
-import React, { useContext, createContext, useState, ReactNode } from 'react';
+import { LayoutGrid, LayoutList } from 'lucide-react';
+import { TabsList, TabsTrigger } from '@/components/ui/tabs';
 
-type ListView = 'grid' | 'list' | 'table';
-
-type ToggleViewContextType = {
-  view: ListView;
-  setView?: React.Dispatch<React.SetStateAction<ListView>>;
+const ViewToggles = () => {
+  return (
+    <TabsList>
+      <TabsTrigger value="grid">
+        <LayoutGrid />
+      </TabsTrigger>
+      <TabsTrigger value="list">
+        <LayoutList />
+      </TabsTrigger>
+    </TabsList>
+  );
 };
 
-const ToggleViewContext = createContext<ToggleViewContextType | undefined>({ view: 'grid' });
-
-const setViewStyles = (view: ListView): string => {
-  switch (view) {
-    case 'list':
-      return 'flex flex-col gap-5';
-
-      break;
-
-    default:
-      return 'grid grid-cols-4 gap-8';
-  }
-};
-
-export const useToggleView = () => useContext(ToggleViewContext);
-
-const ToggableViewProvider = ({ children }: { children: ReactNode }) => {
-  const [view, setView] = useState<ListView>('grid');
-  return <ToggleViewContext.Provider value={{ view, setView }}>{children}</ToggleViewContext.Provider>;
-};
-
-export default ToggableViewProvider;
+export default ViewToggles;

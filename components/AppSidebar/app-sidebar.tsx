@@ -1,6 +1,6 @@
 'use client';
 import React from 'react';
-import { Home, Settings, FileText } from 'lucide-react';
+import { Home, Settings, FileText, Users } from 'lucide-react';
 import { ThemeSwitcher } from '../theme-switcher';
 import { LogoutButton } from '../logout-button';
 import Link from 'next/link';
@@ -17,7 +17,10 @@ import {
   SidebarMenu,
 } from '@/components/ui/sidebar';
 
-const salesLinks = [{ title: 'estimates', url: '/protected/sales', icon: FileText }];
+const salesLinks = [
+  { title: 'estimates', url: '/protected/sales', icon: FileText },
+  { title: 'customers', url: '/protected/sales', icon: Users },
+];
 const AppSidebar = () => {
   return (
     <Sidebar side="left" collapsible="icon">

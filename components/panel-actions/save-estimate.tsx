@@ -8,6 +8,7 @@ import { Item, ItemContent } from '../ui/item';
 import { calculatePayments, calculateAdjustedRange, calculateMedian } from '@/lib/subtotalRange';
 import { getDateIn30Days } from '@/lib/getDateIn30Days';
 import type { LineItem } from '@/lib/estimates-provider';
+import axios from 'axios';
 
 const calculateEstHrSum = (array: LineItem[]) => {
   let sum = 0;
@@ -24,6 +25,23 @@ const SaveEstimateAction = () => {
   const payments = calculatePayments(estimate.adjustedTotal ?? median, estimate.pay_schedule);
   const expires = getDateIn30Days();
   const hours = calculateEstHrSum(estimate.line_items);
+
+  async function handleSave() {
+    const body = {
+      subtotal_min: adjustedRange.min,
+      subtotal_max: adjustedRange.max,
+      final_total: estimate.adjustedTotal ?? median,
+      pay_schedule: estimate.pay_schedule,
+      line_items: estimate.line_items.map((item) => {
+        return { id: item.product._id, qty: item.quantity };
+      }),
+      expires_at: expires,
+    };
+    console.log('body:', estimate);
+    const res = await axios.post('http://localhost:3000/api/estimates', body);
+    console.log('res:', res);
+  }
+
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -100,7 +118,9 @@ const SaveEstimateAction = () => {
               </Button>
             </DialogClose>
             <DialogClose asChild>
-              <Button className="w-full h-[50px]">Save Estimate</Button>
+              <Button className="w-full h-[50px]" onClick={handleSave}>
+                Save Estimate
+              </Button>
             </DialogClose>
           </div>
         </div>
