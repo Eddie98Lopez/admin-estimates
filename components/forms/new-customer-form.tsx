@@ -220,7 +220,7 @@ export default function CustomerForm() {
           </div>
 
           {status && (
-            <p className={`text-sm ${status.type === 'success' ? 'text-green-600' : 'text-destructive'}`}>
+            <p className={`text-sm ${status.type === 'error' ? 'text-destructive' : 'text-green-600'}`}>
               {status.message}
             </p>
           )}
