@@ -87,7 +87,7 @@ export function FinalPriceAction() {
         </div>
 
         <DialogFooter>
-          <div className=" w-full justify-center  gap-4 flex  text-center ">
+          <div className=" w-full justify-center gap-4 grid grid-cols-2 text-center ">
             <DialogClose asChild>
               <Button variant={'secondary'} className="w-full min-h-[50px]" onClick={() => console.log('closed')}>
                 Cancel
