@@ -6,9 +6,8 @@ import { Separator } from '@/components/ui/separator';
 import CustomerCard from '@/components/ui/contact-card';
 import { createClient } from '@/lib/supabase/server';
 
-const supabase = await createClient();
-
 const CustomersPage = async () => {
+  const supabase = await createClient();
   const { data: customers, error } = await supabase
     .from('organizations')
     .select(
