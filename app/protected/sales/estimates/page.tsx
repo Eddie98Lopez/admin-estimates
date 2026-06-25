@@ -7,10 +7,11 @@ import ViewToggle from '@/components/TogglableViewList/tog-view-list-provider';
 import Link from 'next/link';
 import { Badge } from '@/components/ui/badge';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
-import axios from 'axios';
+import { createClient } from '@/lib/supabase/server';
 
 const EstimatesPage = async () => {
-  const estimates = await axios.get('http://localhost:3000/api/estimates');
+  const supabase = await createClient();
+  const { data: estimates, error } = await supabase.from('estimates').select('...');
   console.log(estimates);
   return (
     <div>
