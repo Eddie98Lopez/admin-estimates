@@ -1,18 +1,20 @@
 import CustomerForm from '@/components/forms/new-customer-form';
-import React from 'react';
-import { DialogClose, Dialog, DialogTrigger, DialogContent, DialogTitle } from '@/components/ui/dialog';
+import { Dialog, DialogTrigger, DialogContent, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Plus } from 'lucide-react';
 import { Separator } from '@/components/ui/separator';
-import axios from 'axios';
-import ContactCard from '@/components/ui/contact-card';
+import CustomerCard from '@/components/ui/contact-card';
 import { createClient } from '@/lib/supabase/server';
 
 const supabase = await createClient();
 
 const CustomersPage = async () => {
-  const { data: contacts, error } = await supabase.from('contacts').select('id,email,phone,first_name,last_name');
-  console.log(contacts);
+  const { data: customers, error } = await supabase
+    .from('organizations')
+    .select(
+      'id,org_name,postal_code,state,city,street_address,contact:contacts!primary_contact (id,email,first_name,last_name,phone)',
+    );
+  console.log(customers);
 
   return (
     <div>
@@ -34,8 +36,8 @@ const CustomersPage = async () => {
       </header>
       <Separator />
       <div className="w-full flex gap-4 pt-8">
-        {contacts.map((contact) => (
-          <ContactCard contact={contact} key={'contact-' + contact.id} />
+        {customers.map((customer) => (
+          <CustomerCard customer={customer} key={'customer-' + customer.id} />
         ))}
       </div>
     </div>
