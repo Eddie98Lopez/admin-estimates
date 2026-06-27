@@ -49,7 +49,7 @@ export async function sendEstimate(id: string) {
 
   const { data, error: sendError } = await resend.emails.send({
     from: process.env.RESEND_FROM_EMAIL!,
-    to: [estimate.recipient.email],
+    to: estimate.recipient.email,
     subject: `Estimate ${estimate.estimate_number_formatted} from ${estimate.organization.org_name}`,
     html: '<p>test test</p>',
   });

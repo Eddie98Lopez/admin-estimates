@@ -1,6 +1,6 @@
 FROM node:22-alpine
 
-WORKDIR /adim-dash-template
+WORKDIR /admin-dash-template
 
 COPY package*.json ./
 

@@ -7,5 +7,5 @@ services:
     ports:
       - '3000:3000'
     volumes:
-      - .:/adim-dash-template
-      - /adim-dash-template/node_modules
+      - .:/admin-dash-template
+      - /admin-dash-template/node_modules

@@ -2,21 +2,21 @@ import { Button } from '@/components/ui/button';
 import { Plus, Send, View, FileText, FileEdit } from 'lucide-react';
 import { DataCard } from '@/components/ui/data-card';
 import { Tabs, TabsContent } from '@/components/ui/tabs';
-import { Item } from '@/components/ui/item';
+import { Card, CardContent, CardTitle } from '@/components/ui/card';
 import ViewToggle from '@/components/TogglableViewList/tog-view-list-provider';
 import Link from 'next/link';
 import { Badge } from '@/components/ui/badge';
-import { Avatar, AvatarFallback } from '@/components/ui/avatar';
-import { createClient } from '@/lib/supabase/server';
+import { getEstimates } from './actions/getEstimates';
+
+function formatCurrency(value: number | string) {
+  return new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+  }).format(Number(value));
+}
 
 const EstimatesPage = async () => {
-  const supabase = await createClient();
-  const { data: estimates } = await supabase.from('estimates').select(`
-    *,
-    organization:org_id ( * ),
-    recipient:recipient_id ( * )
-  `);
-  console.log(estimates);
+  const estimates = await getEstimates();
   return (
     <div>
       <header className="flex justify-between my-4">
@@ -50,27 +50,31 @@ const EstimatesPage = async () => {
       <Tabs defaultValue="grid">
         <ViewToggle />
         <TabsContent value="grid">
-          <div className="grid grid-cols-4 gap-3">
-            <Item variant="outline" className="flex flex-col items-start justify-between min-h-[200px]">
-              <div className="flex justify-start items-center gap-2">
-                <Avatar>
-                  <AvatarFallback>FL</AvatarFallback>
-                </Avatar>{' '}
-                First Last
-              </div>
+          <div className="flex ">
+            {estimates.map((est) => (
+              <Link key={`estimate-${est.id}`} href={`/protected/sales/estimates/${est.id}`}>
+                <Card className="flex-col items-stretch gap-3 min-w-sm rounded-lg border p-4 transition-colors hover:bg-accent hover:border-accent-foreground/20">
+                  <div className="flex items-start justify-between gap-2">
+                    <CardTitle className="font-mono text-sm font-semibold tracking-tight">
+                      {est.estimate_number_formatted}
+                    </CardTitle>
+                    <Badge variant="secondary">{est.status}</Badge>
+                  </div>
 
-              <p className="font-bold text-4xl">$12,000</p>
-              <div className="flex justify-between w-full">
-                <div>
-                  <p className="color-grey">00001</p>
-                  <p>expires: 1/12/27</p>
-                </div>
-                <Badge variant={`secondary`}>Sent</Badge>
-              </div>
-            </Item>
-            <Item variant="outline">2</Item>
-            <Item variant="outline">3</Item>
-            <Item variant="outline">4</Item>
+                  <div className="flex flex-col gap-1">
+                    <div className="truncate font-medium text-foreground">{est.organization.org_name}</div>
+                    <div className="truncate text-sm text-muted-foreground">
+                      {est.recipient.first_name} {est.recipient.last_name}
+                    </div>
+                  </div>
+
+                  <div className="mt-1 flex items-baseline justify-between border-t pt-3">
+                    <span className="text-xs text-muted-foreground">Total</span>
+                    <span className="text-lg font-semibold tabular-nums">{formatCurrency(est.final_total)}</span>
+                  </div>
+                </Card>
+              </Link>
+            ))}
           </div>
         </TabsContent>
         <TabsContent value="list">List Content</TabsContent>
