@@ -2,6 +2,7 @@
 import React, { createContext, useContext, useMemo, useReducer } from 'react';
 import type { ReactNode, Dispatch } from 'react';
 import type { Product } from './dummyData';
+import { Contact, Customer } from '@/components/ui/contact-card';
 
 export type LineItem = {
   product: Product;
@@ -19,8 +20,9 @@ export type ValueMulitiplier = 1 | 1.1 | 1.2 | 1.4;
 
 export type Estimate = {
   line_items: LineItem[]; // keep it as [] instead of null to simplify
-  customer_id?: string;
+  recipient?: Contact;
   adjustedTotal?: number;
+  customer?: Customer;
 
   discount?: Discount;
 
@@ -40,7 +42,6 @@ type EstimatesState = {
 
 const initialEstimate: Estimate = {
   line_items: [],
-  customer_id: undefined,
   discount: undefined,
   pay_schedule: [50, 25, 25],
   value_multiplier: 1.1,
@@ -53,7 +54,7 @@ const initialState: EstimatesState = {
 // ---------- reducer actions ----------
 type Action =
   | { type: 'RESET_ESTIMATE'; payload?: Partial<Estimate> }
-  | { type: 'SET_CUSTOMER_ID'; payload?: string }
+  | { type: 'SET_CUSTOMER'; payload?: { recipient: Contact; customer: Customer } }
   | { type: 'SET_VALUE_MULTIPLIER'; payload: Estimate['value_multiplier'] }
   | { type: 'SET_DISCOUNT'; payload?: Discount }
   | { type: 'CLEAR_DISCOUNT' }
@@ -103,8 +104,8 @@ function reducer(state: EstimatesState, action: Action): EstimatesState {
       return { estimate: next };
     }
 
-    case 'SET_CUSTOMER_ID':
-      return { estimate: { ...e, customer_id: action.payload } };
+    case 'SET_CUSTOMER':
+      return { estimate: { ...e, recipient: action.payload.recipient, customer: action.payload.customer } };
 
     case 'SET_VALUE_MULTIPLIER':
       return { estimate: { ...e, value_multiplier: action.payload } };
@@ -203,7 +204,7 @@ type EstimatesContextValue = {
   // Convenience methods (you can use dispatch directly if you want)
   resetEstimate: (partial?: Partial<Estimate>) => void;
 
-  setCustomerId: (id?: string) => void;
+  setCustomer: (customer?: { customer: Customer; recipient: Contact }) => void;
   setValueMultiplier: (m: Estimate['value_multiplier']) => void;
 
   setDiscount: (d?: Discount) => void;
@@ -237,7 +238,7 @@ export function EstimatesProvider({ children }: { children: ReactNode }) {
 
       resetEstimate: (partial) => dispatch({ type: 'RESET_ESTIMATE', payload: partial }),
 
-      setCustomerId: (id) => dispatch({ type: 'SET_CUSTOMER_ID', payload: id }),
+      setCustomer: (m) => dispatch({ type: 'SET_CUSTOMER', payload: m }),
       setValueMultiplier: (m) => dispatch({ type: 'SET_VALUE_MULTIPLIER', payload: m }),
       setAdjustedTotal: (total) => dispatch({ type: 'SET_ADJUSTED_TOTAL', payload: total }),
 

@@ -1,5 +1,6 @@
 import { supabaseClient } from '@/lib/supabase/client';
 import { createClient } from '@/lib/supabase/server';
+
 export async function GET() {
   let { data: estimates, error } = await supabaseClient.from('estimates').select('*');
 

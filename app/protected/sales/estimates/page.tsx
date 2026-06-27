@@ -11,7 +11,11 @@ import { createClient } from '@/lib/supabase/server';
 
 const EstimatesPage = async () => {
   const supabase = await createClient();
-  const { data: estimates, error } = await supabase.from('estimates').select('...');
+  const { data: estimates } = await supabase.from('estimates').select(`
+    *,
+    organization:org_id ( * ),
+    recipient:recipient_id ( * )
+  `);
   console.log(estimates);
   return (
     <div>
@@ -25,10 +29,22 @@ const EstimatesPage = async () => {
       </header>
 
       <div id="quick-stats" className="flex flex-col md:grid md:grid-cols-2 lg:grid-cols-4 gap-3 mb-4">
-        <DataCard icon={<FileText />} label="All Estimates:" measurement={0} />
-        <DataCard icon={<FileEdit />} label="Draft Estimates:" measurement={0} />
-        <DataCard icon={<Send />} label="Sent Estimates:" measurement={0} />
-        <DataCard icon={<View />} label="Viewed Estimates:" measurement={0} />
+        <DataCard icon={<FileText />} label="All Estimates:" measurement={estimates.length} />
+        <DataCard
+          icon={<FileEdit />}
+          label="Draft Estimates:"
+          measurement={estimates.filter((est) => est.status == 'draft').length}
+        />
+        <DataCard
+          icon={<Send />}
+          label="Sent Estimates:"
+          measurement={estimates.filter((est) => est.sent_at !== null).length}
+        />
+        <DataCard
+          icon={<View />}
+          label="Viewed Estimates:"
+          measurement={estimates.filter((est) => est.viewed_at !== null).length}
+        />
       </div>
 
       <Tabs defaultValue="grid">

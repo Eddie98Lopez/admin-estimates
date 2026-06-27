@@ -4,7 +4,8 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "gen:types": "npx supabase gen types typescript --linked --schema public > database.types.ts"
   },
   "dependencies": {
     "@base-ui/react": "^1.6.0",
@@ -28,6 +29,7 @@
     "radix-ui": "^1.6.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "resend": "^6.16.0",
     "tailwind-merge": "^3.3.0",
     "zod": "^4.4.3"
   },

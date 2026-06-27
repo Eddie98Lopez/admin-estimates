@@ -4,7 +4,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, Dialog
 import { Button } from '../ui/button';
 import { useEstimates } from '@/lib/estimates-provider';
 import { formatterUS } from './final-total-action';
-import { Item, ItemContent } from '../ui/item';
+import { Item, ItemContent, ItemMedia, ItemTitle } from '../ui/item';
 import { calculatePayments, calculateAdjustedRange, calculateMedian } from '@/lib/subtotalRange';
 import { getDateIn30Days } from '@/lib/getDateIn30Days';
 import type { LineItem } from '@/lib/estimates-provider';
@@ -30,6 +30,8 @@ const SaveEstimateAction = () => {
     const body = {
       subtotal_min: adjustedRange.min,
       subtotal_max: adjustedRange.max,
+      org_id: estimate.customer.id,
+      recipient_id: estimate.recipient.id,
       final_total: estimate.adjustedTotal ?? median,
       pay_schedule: estimate.pay_schedule,
       line_items: estimate.line_items.map((item) => {
@@ -62,15 +64,30 @@ const SaveEstimateAction = () => {
               <p className="text-xs">Approximate Hours: {hours}</p>
             </div>
           </div>
-          <Item variant={'outline'}>
-            <ItemContent className="flex flex-row gap-6 items-center">
-              <User />
-              <div>
-                <p className="font-bold">Contact Name</p>
-                <p className="text-xs">contact email</p>
-              </div>
-            </ItemContent>
-          </Item>
+          {estimate.customer && estimate.recipient && (
+            <Item variant="outline" className="items-start gap-4">
+              <ItemMedia variant="icon" className="size-10 shrink-0 rounded-full bg-primary/10 text-primary">
+                <User className="size-5" />
+              </ItemMedia>
+
+              <ItemContent className="gap-3">
+                <div className="space-y-0.5">
+                  <p className="text-[10px] font-medium uppercase tracking-wide text-muted-foreground">Customer</p>
+                  <ItemTitle className="text-lg font-semibold leading-tight">{estimate.customer?.org_name}</ItemTitle>
+                </div>
+
+                <div className="rounded-md border bg-muted/40 px-3 py-2">
+                  <p className="text-[10px] font-medium uppercase tracking-wide text-muted-foreground">Recipient</p>
+                  <p className="font-medium leading-tight">
+                    {estimate.recipient?.first_name} {estimate.recipient?.last_name}
+                  </p>
+                  <p className="truncate text-sm text-muted-foreground" title={estimate.recipient?.email}>
+                    {estimate.recipient?.email}
+                  </p>
+                </div>
+              </ItemContent>
+            </Item>
+          )}
           <div>
             <h4 className="text-xs font-bold uppercase">Line Items:</h4>
             <ul className="bg-secondary">

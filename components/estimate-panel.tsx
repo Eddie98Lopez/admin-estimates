@@ -9,6 +9,7 @@ import {
   FinalPriceAction,
   ValueMultiplierAction,
   PayScheduleAction,
+  SelectCustomer,
 } from './panel-actions';
 import { calculateAdjustedRange, calculateSubtotalRange } from '@/lib/subtotalRange';
 import type { LineItem } from '@/lib/estimates-provider';
@@ -25,12 +26,9 @@ const EstimateActionButtons = () => {
     <div className="grid grid-cols-[1fr_1fr] gap-3 w-full grow-2">
       <DiscountAction />
       <ValueMultiplierAction />
-
       <PayScheduleAction />
       <FinalPriceAction />
-      <Button variant="outline" className="col-span-full min-h-[50px]">
-        <User /> <span>Select Customer</span>
-      </Button>
+      <SelectCustomer />
       <SaveEstimateAction />
     </div>
   );
